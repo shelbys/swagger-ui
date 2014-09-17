@@ -1849,7 +1849,7 @@ function program3(depth0,data) {
       for (_j = 0, _len1 = _ref7.length; _j < _len1; _j++) {
         param = _ref7[_j];
         type = param.type || param.dataType;
-        if (type.toLowerCase() === 'file') {
+        if ((type || '').toLowerCase() === 'file') {
           if (!contentTypeModel.consumes) {
             log("set content type ");
             contentTypeModel.consumes = 'multipart/form-data';
@@ -1981,7 +1981,7 @@ function program3(depth0,data) {
       for (_j = 0, _len1 = _ref7.length; _j < _len1; _j++) {
         param = _ref7[_j];
         if (param.paramType === 'form') {
-          if (param.type.toLowerCase() !== 'file' && map[param.name] !== void 0) {
+          if ((param.type || '').toLowerCase() !== 'file' && map[param.name] !== void 0) {
             bodyParam.append(param.name, map[param.name]);
           }
         }
@@ -2340,7 +2340,7 @@ function program3(depth0,data) {
       if (this.model.param.paramType === 'body') {
         this.model.param.isBody = true;
       }
-      if (type.toLowerCase() === 'file') {
+      if ((type || '').toLowerCase() === 'file') {
         this.model.param.isFile = true;
       }
       template = this.template();
