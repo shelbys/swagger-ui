@@ -285,7 +285,7 @@ function program4(depth0,data) {
 templates['main'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;
+  var buffer = "", stack1, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
   
@@ -310,10 +310,11 @@ function program1(depth0,data) {
   }
 function program2(depth0,data) {
   
-  var buffer = "", stack1;
-  buffer += "<div class=\"info_title\">"
-    + escapeExpression(((stack1 = ((stack1 = depth0.info),stack1 == null || stack1 === false ? stack1 : stack1.title)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</div>";
+  var buffer = "", stack1, stack2;
+  buffer += "<div class=\"info_title\">";
+  stack2 = ((stack1 = ((stack1 = depth0.info),stack1 == null || stack1 === false ? stack1 : stack1.title)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1);
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += "</div>";
   return buffer;
   }
 
@@ -371,7 +372,7 @@ function program12(depth0,data) {
   buffer += "<div class='info' id='api_info'>\n  ";
   stack1 = helpers['if'].call(depth0, depth0.info, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n</div>\n<div class='container' id='resources_container'>\n    <ul id='resources'>\n    </ul>\n\n    <div class=\"footer\">\n        <br>\n        <br>\n        <h4 style=\"color: #999\">[ <span style=\"font-variant: small-caps\">base url</span>: ";
+  buffer += "\n</div>\n<div class='container' id='resources_container'>\n    <ul id='resources'>\n    </ul>\n\n    <div class=\"info_server\">\n        <h4 style=\"color: #999\">[ <span style=\"font-variant: small-caps\">base url</span>: ";
   if (stack1 = helpers.basePath) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.basePath; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
@@ -2349,7 +2350,7 @@ function program3(depth0,data) {
       modelLabel = this.model.param.type || this.model.param.dataType;
       if (modelAnchor.indexOf('[') >= 0) {
         modelAnchor = modelAnchor.replace(/\[/, 'ArrayOf').replace(/\]/, '');
-        modelLabel = modelLabel.replace(/\[/, 'Array of ').replace(/\]/, '');
+        modelLabel = modelLabel.replace(/(array)?\[/, 'Array of ').replace(/\]/, '');
       }
       signatureModel = {
         parentId: this.model.container.resourceName,
