@@ -79,7 +79,7 @@ class OperationView extends Backbone.View
 
     for param in @model.parameters
       type = param.type || param.dataType
-      if type.toLowerCase() == 'file'
+      if (type || '').toLowerCase() == 'file'
         if !contentTypeModel.consumes
           log "set content type "
           contentTypeModel.consumes = 'multipart/form-data'
@@ -165,7 +165,7 @@ class OperationView extends Backbone.View
     # add params
     for param in @model.parameters
       if param.paramType is 'form'
-        if param.type.toLowerCase() isnt 'file' and map[param.name] != undefined
+        if (param.type || '').toLowerCase() isnt 'file' and map[param.name] != undefined
             bodyParam.append(param.name, map[param.name])
 
     # headers in operation
@@ -340,7 +340,7 @@ class OperationView extends Backbone.View
     contentType = if headers && headers["Content-Type"] then headers["Content-Type"].split(";")[0].trim() else null
 
     if !content
-      code = $('<code />').text("no content")
+      code = $('<code />').text("No Content")
       pre = $('<pre class="json" />').append(code)
     else if contentType is "application/json" || /\+json$/.test(contentType)
       code = $('<code />').text(JSON.stringify(JSON.parse(content), null, "  "))
@@ -358,11 +358,11 @@ class OperationView extends Backbone.View
       code = $('<code />').text(content)
       pre = $('<pre class="json" />').append(code)
 
-    if !obj.data
-      reqcode = $('<code />').text("no content")
+    if !obj.body
+      reqcode = $('<code />').text("No Content")
       reqpre = $('<pre class="json" />').append(reqcode)
     else
-      reqcode = $('<code />').text(obj.data)
+      reqcode = $('<code />').text(obj.body)
       reqpre = $('<pre class="json" />').append(reqcode)
 
 

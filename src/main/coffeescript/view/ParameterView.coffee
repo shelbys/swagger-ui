@@ -10,7 +10,7 @@ class ParameterView extends Backbone.View
   render: ->
     type = @model.param.type || @model.param.dataType
     @model.param.isBody = true if @model.param.paramType == 'body'
-    @model.param.isFile = true if type.toLowerCase() == 'file'
+    @model.param.isFile = true if (type || '').toLowerCase() == 'file'
 
     template = @template()
     $(@el).html(template(@model.param))
@@ -19,7 +19,7 @@ class ParameterView extends Backbone.View
     modelLabel = @model.param.type || @model.param.dataType
     if modelAnchor.indexOf('[') >= 0
       modelAnchor = modelAnchor.replace(/\[/, 'ArrayOf').replace(/\]/, '')
-      modelLabel = modelLabel.replace(/\[/, 'Array of ').replace(/\]/, '')
+      modelLabel = modelLabel.replace(/(array)?\[/, 'Array of ').replace(/\]/, '')
     signatureModel =
       parentId: @model.container.resourceName,
       nickname: @model.container.nickname,

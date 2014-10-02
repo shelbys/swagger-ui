@@ -285,7 +285,7 @@ function program4(depth0,data) {
 templates['main'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;
+  var buffer = "", stack1, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
   
@@ -310,10 +310,11 @@ function program1(depth0,data) {
   }
 function program2(depth0,data) {
   
-  var buffer = "", stack1;
-  buffer += "<div class=\"info_title\">"
-    + escapeExpression(((stack1 = ((stack1 = depth0.info),stack1 == null || stack1 === false ? stack1 : stack1.title)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</div>";
+  var buffer = "", stack1, stack2;
+  buffer += "<div class=\"info_title\">";
+  stack2 = ((stack1 = ((stack1 = depth0.info),stack1 == null || stack1 === false ? stack1 : stack1.title)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1);
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += "</div>";
   return buffer;
   }
 
@@ -371,7 +372,7 @@ function program12(depth0,data) {
   buffer += "<div class='info' id='api_info'>\n  ";
   stack1 = helpers['if'].call(depth0, depth0.info, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n</div>\n<div class='container' id='resources_container'>\n    <ul id='resources'>\n    </ul>\n\n    <div class=\"footer\">\n        <br>\n        <br>\n        <h4 style=\"color: #999\">[ <span style=\"font-variant: small-caps\">base url</span>: ";
+  buffer += "\n</div>\n<div class='container' id='resources_container'>\n    <ul id='resources'>\n    </ul>\n\n    <div class=\"info_server\">\n        <h4 style=\"color: #999\">[ <span style=\"font-variant: small-caps\">base url</span>: ";
   if (stack1 = helpers.basePath) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.basePath; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
@@ -568,7 +569,7 @@ function program20(depth0,data) {
   buffer += "\n        <div class=\"response-content-type\" />\n        ";
   stack2 = helpers['if'].call(depth0, depth0.isReadOnly, {hash:{},inverse:self.program(20, program20, data),fn:self.program(18, program18, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\n        <div class='response' style='display:none'>\n          <h4>Request URL</h4>\n          <div class='block request_url'></div>\n          <h4>Response Body</h4>\n          <div class='block response_body'></div>\n          <h4>Response Code</h4>\n          <div class='block response_code'></div>\n          <h4>Response Headers</h4>\n          <div class='block response_headers'></div>\n        </div>\n      </div>\n    </li>\n  </ul>\n";
+  buffer += "\n        <div class='response' style='display:none'>\n          <h4>Request</h4>\n          <table>\n            <tr>\n              <td width=\"10\" />\n              <td><br/>url</td>\n              <td><div class='block request_url'></div></td>\n            </tr>\n            <tr>\n              <td width=\"10\" />\n              <td><br/>headers</td>\n              <td><div class='block request_headers'></div></td>\n            </tr>\n            <tr>\n              <td width=\"10\" />\n              <td><br/>body</td>\n              <td><div class='block request_body'></div></td>\n            </tr>\n          </table>\n          <h4>Response</h4>\n          <table>\n            <tr>\n              <td width=\"10\" />\n              <td><br/>code</td>\n              <td><div class='block response_code'></div></td>\n            </tr>\n            <tr>\n              <td width=\"10\" />\n              <td><br/>headers</td>\n              <td><div class='block response_headers'></div></td>\n            </tr>\n            <tr>\n              <td width=\"10\" />\n              <td><br/>body</td>\n              <td><div class='block response_body'></div></td>\n            </tr>\n          </table>\n        </div>\n      </div>\n    </li>\n  </ul>\n";
   return buffer;
   });
 })();
@@ -1849,7 +1850,7 @@ function program3(depth0,data) {
       for (_j = 0, _len1 = _ref7.length; _j < _len1; _j++) {
         param = _ref7[_j];
         type = param.type || param.dataType;
-        if (type.toLowerCase() === 'file') {
+        if ((type || '').toLowerCase() === 'file') {
           if (!contentTypeModel.consumes) {
             log("set content type ");
             contentTypeModel.consumes = 'multipart/form-data';
@@ -1981,7 +1982,7 @@ function program3(depth0,data) {
       for (_j = 0, _len1 = _ref7.length; _j < _len1; _j++) {
         param = _ref7[_j];
         if (param.paramType === 'form') {
-          if (param.type.toLowerCase() !== 'file' && map[param.name] !== void 0) {
+          if ((param.type || '').toLowerCase() !== 'file' && map[param.name] !== void 0) {
             bodyParam.append(param.name, map[param.name]);
           }
         }
@@ -2171,7 +2172,7 @@ function program3(depth0,data) {
     };
 
     OperationView.prototype.showStatus = function(response) {
-      var code, content, contentType, headers, opts, pre, response_body, response_body_el, url;
+      var code, content, contentType, headers, opts, pre, req_body, reqcode, reqpre, response_body, response_body_el, url;
       if (response.content === void 0) {
         content = response.data;
         url = response.url;
@@ -2182,7 +2183,7 @@ function program3(depth0,data) {
       headers = response.headers;
       contentType = headers && headers["Content-Type"] ? headers["Content-Type"].split(";")[0].trim() : null;
       if (!content) {
-        code = $('<code />').text("no content");
+        code = $('<code />').text("No Content");
         pre = $('<pre class="json" />').append(code);
       } else if (contentType === "application/json" || /\+json$/.test(contentType)) {
         code = $('<code />').text(JSON.stringify(JSON.parse(content), null, "  "));
@@ -2199,8 +2200,18 @@ function program3(depth0,data) {
         code = $('<code />').text(content);
         pre = $('<pre class="json" />').append(code);
       }
+      if (!obj.body) {
+        reqcode = $('<code />').text("No Content");
+        reqpre = $('<pre class="json" />').append(reqcode);
+      } else {
+        reqcode = $('<code />').text(obj.body);
+        reqpre = $('<pre class="json" />').append(reqcode);
+      }
       response_body = pre;
+      req_body = reqpre;
       $(".request_url", $(this.el)).html("<pre>" + url + "</pre>");
+      $(".request_body", $(this.el)).html(req_body);
+      $(".request_headers", $(this.el)).html("<pre>" + _.escape(JSON.stringify(obj.headers, null, "  ")).replace(/\n/g, "<br>") + "</pre>");
       $(".response_code", $(this.el)).html("<pre>" + response.status + "</pre>");
       $(".response_body", $(this.el)).html(response_body);
       $(".response_headers", $(this.el)).html("<pre>" + _.escape(JSON.stringify(response.headers, null, "  ")).replace(/\n/g, "<br>") + "</pre>");
@@ -2340,7 +2351,7 @@ function program3(depth0,data) {
       if (this.model.param.paramType === 'body') {
         this.model.param.isBody = true;
       }
-      if (type.toLowerCase() === 'file') {
+      if ((type || '').toLowerCase() === 'file') {
         this.model.param.isFile = true;
       }
       template = this.template();
@@ -2349,7 +2360,7 @@ function program3(depth0,data) {
       modelLabel = this.model.param.type || this.model.param.dataType;
       if (modelAnchor.indexOf('[') >= 0) {
         modelAnchor = modelAnchor.replace(/\[/, 'ArrayOf').replace(/\]/, '');
-        modelLabel = modelLabel.replace(/\[/, 'Array of ').replace(/\]/, '');
+        modelLabel = modelLabel.replace(/(array)?\[/, 'Array of ').replace(/\]/, '');
       }
       signatureModel = {
         parentId: this.model.container.resourceName,
