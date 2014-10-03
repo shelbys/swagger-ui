@@ -451,22 +451,10 @@ function program12(depth0,data) {
 function program14(depth0,data) {
   
   
-  return "\n          <h4>Response Class</h4>\n          <p><span class=\"model-signature\" /></p>\n          <br/>\n        ";
-  }
-
-function program16(depth0,data) {
-  
-  
-  return "\n        <div style='margin:0;padding:0;display:inline'></div>\n        <h4>Response Messages</h4>\n        <table class='fullwidth'>\n          <thead>\n          <tr>\n            <th style=\"width: 60px; max-width: 60px\">Status</th>\n            <th style=\"width: 390px; max-width: 390px\">Reason</th>\n            <th style=\"width: 488px; max-width: 488px\">Model</th>\n          </tr>\n          </thead>\n          <tbody class=\"operation-status\">\n\n          </tbody>\n        </table>\n        ";
-  }
-
-function program18(depth0,data) {
-  
-  
   return "\n        ";
   }
 
-function program20(depth0,data) {
+function program16(depth0,data) {
   
   var buffer = "", stack1;
   buffer += "\n          <div class='sandbox_header'>\n            <input class='submit' name='commit' type='button' value='Try it out!' />\n            <a href='#' class='response_hider' style='display:none'>Hide Response</a>\n            <img alt='Throbber' class='response_throbber' src='";
@@ -475,6 +463,18 @@ function program20(depth0,data) {
   buffer += escapeExpression(stack1)
     + "/images/throbber.gif' style='display:none' />\n          </div>\n        ";
   return buffer;
+  }
+
+function program18(depth0,data) {
+  
+  
+  return "\n          <h4>Response Class</h4>\n          <p><span class=\"model-signature\" /></p>\n          <br/>\n        ";
+  }
+
+function program20(depth0,data) {
+  
+  
+  return "\n        <div style='margin:0;padding:0;display:inline'></div>\n        <h4>Response Messages</h4>\n        <table class='fullwidth'>\n          <thead>\n          <tr>\n            <th style=\"width: 60px; max-width: 60px\">Status</th>\n            <th style=\"width: 390px; max-width: 390px\">Reason</th>\n            <th style=\"width: 488px; max-width: 488px\">Model</th>\n          </tr>\n          </thead>\n          <tbody class=\"operation-status\">\n\n          </tbody>\n        </table>\n        ";
   }
 
   buffer += "\n  <ul class='operations' >\n    <li class='";
@@ -560,16 +560,16 @@ function program20(depth0,data) {
   buffer += "\n        <form accept-charset='UTF-8' class='sandbox'>\n          <div style='margin:0;padding:0;display:inline'></div>\n          ";
   stack2 = helpers['if'].call(depth0, depth0.parameters, {hash:{},inverse:self.noop,fn:self.program(12, program12, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\n        </form>\n        ";
-  stack2 = helpers['if'].call(depth0, depth0.type, {hash:{},inverse:self.noop,fn:self.program(14, program14, data),data:data});
+  buffer += "\n        </form>\n        <div class=\"response-content-type\" />\n        ";
+  stack2 = helpers['if'].call(depth0, depth0.isReadOnly, {hash:{},inverse:self.program(16, program16, data),fn:self.program(14, program14, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += "\n        <div class='response' style='display:none'>\n          <table class='fullwidth'>\n            <tr>\n              <td class='response-header' colspan='2'><h4>Response</h4></td>\n            </tr>\n            <tr>\n              <td>Status</td>\n              <td><div class='block response_code'></div></td>\n            </tr>\n            <tr>\n              <td>Body</td>\n              <td><div class='block response_body'></div></td>\n            </tr>\n            <tr>\n              <td>Headers</td>\n              <td><div class='block response_headers'></div></td>\n            </tr>\n            <tr>\n              <td class='response-header' colspan='2'><h4>Request</h4></td>\n            </tr>\n            <tr>\n              <td>URL</td>\n              <td><div class='block request_url'></div></td>\n            </tr>\n            <tr>\n              <td>Headers</td>\n              <td><div class='block request_headers'></div></td>\n            </tr>\n            <tr>\n              <td>Body</td>\n              <td><div class='block request_body'></div></td>\n            </tr>\n          </table>\n        </div>\n        ";
+  stack2 = helpers['if'].call(depth0, depth0.type, {hash:{},inverse:self.noop,fn:self.program(18, program18, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\n        ";
-  stack2 = helpers['if'].call(depth0, depth0.responseMessages, {hash:{},inverse:self.noop,fn:self.program(16, program16, data),data:data});
+  stack2 = helpers['if'].call(depth0, depth0.responseMessages, {hash:{},inverse:self.noop,fn:self.program(20, program20, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\n        <div class=\"response-content-type\" />\n        ";
-  stack2 = helpers['if'].call(depth0, depth0.isReadOnly, {hash:{},inverse:self.program(20, program20, data),fn:self.program(18, program18, data),data:data});
-  if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\n        <div class='response' style='display:none'>\n          <h4>Request URL</h4>\n          <div class='block request_url'></div>\n          <h4>Response Body</h4>\n          <div class='block response_body'></div>\n          <h4>Response Code</h4>\n          <div class='block response_code'></div>\n          <h4>Response Headers</h4>\n          <div class='block response_headers'></div>\n        </div>\n      </div>\n    </li>\n  </ul>\n";
+  buffer += "\n      </div>\n    </li>\n  </ul>\n";
   return buffer;
   });
 })();
@@ -2006,6 +2006,8 @@ function program3(depth0,data) {
       }
       this.invocationUrl = this.model.supportHeaderParams() ? (headerParams = this.model.getHeaderParams(map), this.model.urlify(map, false)) : this.model.urlify(map, true);
       $(".request_url", $(this.el)).html("<pre>" + this.invocationUrl + "</pre>");
+      this.showContent('json', headerParams, ".request_headers", $(this.el));
+      $(".request_body", $(this.el)).html(bodyParam || 'No Content');
       obj = {
         type: this.model.method,
         url: this.invocationUrl,
@@ -2015,12 +2017,24 @@ function program3(depth0,data) {
         contentType: false,
         processData: false,
         error: function(data, textStatus, error) {
+          data.request = {
+            headers: headerParams,
+            body: bodyParam
+          };
           return _this.showErrorStatus(_this.wrap(data), _this);
         },
         success: function(data) {
+          data.request = {
+            headers: headerParams,
+            body: bodyParam
+          };
           return _this.showResponse(data, _this);
         },
         complete: function(data) {
+          data.request = {
+            headers: headerParams,
+            body: bodyParam
+          };
           return _this.showCompleteStatus(_this.wrap(data), _this);
         }
       };
@@ -2171,8 +2185,38 @@ function program3(depth0,data) {
       return formatted;
     };
 
+    OperationView.prototype.showContent = function(contentType, content, query, parent) {
+      var json, pre, targetElement;
+      targetElement = $(query, parent);
+      targetElement.removeClass('json');
+      targetElement.removeClass('xml');
+      if (!content) {
+        pre = $('<pre />').text("No Content");
+      } else if (/json/.test(contentType)) {
+        try {
+          json = typeof content === 'string' ? JSON.parse(content) : content;
+          pre = $('<pre class="json" />').text(JSON.stringify(json, null, "  "));
+        } catch (_error) {
+          pre = $('<pre class="json" />').append(content);
+        }
+        targetElement.addClass('json');
+      } else if (/xml/.test(contentType)) {
+        pre = $('<pre class="xml" />').text(this.formatXml(content));
+        targetElement.addClass('xml');
+      } else if (/html/.test(contentType)) {
+        pre = $('<pre class="xml" />').html(content);
+        targetElement.addClass('xml');
+      } else if (/image/.test(contentType)) {
+        pre = $('<img>').attr('src', url);
+      } else {
+        pre = $('<pre class="json" />').text(content);
+        targetElement.addClass('json');
+      }
+      return targetElement.html(pre);
+    };
+
     OperationView.prototype.showStatus = function(response) {
-      var code, content, contentType, headers, opts, pre, response_body, response_body_el, url;
+      var content, contentType, headers, opts, requestContentType, request_body_el, request_headers_el, response_body_el, response_headers, url;
       if (response.content === void 0) {
         content = response.data;
         url = response.url;
@@ -2181,35 +2225,28 @@ function program3(depth0,data) {
         url = response.request.url;
       }
       headers = response.headers;
-      contentType = headers && headers["Content-Type"] ? headers["Content-Type"].split(";")[0].trim() : null;
-      if (!content) {
-        code = $('<code />').text("no content");
-        pre = $('<pre class="json" />').append(code);
-      } else if (contentType === "application/json" || /\+json$/.test(contentType)) {
-        code = $('<code />').text(JSON.stringify(JSON.parse(content), null, "  "));
-        pre = $('<pre class="json" />').append(code);
-      } else if (contentType === "application/xml" || /\+xml$/.test(contentType)) {
-        code = $('<code />').text(this.formatXml(content));
-        pre = $('<pre class="xml" />').append(code);
-      } else if (contentType === "text/html") {
-        code = $('<code />').html(content);
-        pre = $('<pre class="xml" />').append(code);
-      } else if (/^image\//.test(contentType)) {
-        pre = $('<img>').attr('src', url);
-      } else {
-        code = $('<code />').text(content);
-        pre = $('<pre class="json" />').append(code);
+      contentType = headers && headers["Content-Type"] ? headers["Content-Type"] : null;
+      requestContentType = 'json';
+      if (response.request && response.request.headers) {
+        requestContentType = response.request.headers['Content-Type'] || 'json';
       }
-      response_body = pre;
       $(".request_url", $(this.el)).html("<pre>" + url + "</pre>");
+      this.showContent(requestContentType, response.request && response.request.body, ".request_body", $(this.el));
+      this.showContent('json', response.request && response.request.headers, ".request_headers", $(this.el));
       $(".response_code", $(this.el)).html("<pre>" + response.status + "</pre>");
-      $(".response_body", $(this.el)).html(response_body);
-      $(".response_headers", $(this.el)).html("<pre>" + _.escape(JSON.stringify(response.headers, null, "  ")).replace(/\n/g, "<br>") + "</pre>");
+      this.showContent(contentType, content, ".response_body", $(this.el));
+      this.showContent('json', response.headers, ".response_headers", $(this.el));
       $(".response", $(this.el)).slideDown();
       $(".response_hider", $(this.el)).show();
       $(".response_throbber", $(this.el)).hide();
+      request_headers_el = $('.request_headers', $(this.el))[0];
+      request_body_el = $('.request_body', $(this.el))[0];
+      response_headers = $('.response_headers', $(this.el))[0];
       response_body_el = $('.response_body', $(this.el))[0];
       opts = this.options.swaggerOptions;
+      hljs.highlightBlock(request_headers_el);
+      hljs.highlightBlock(request_body_el);
+      hljs.highlightBlock(response_headers);
       if (opts.highlightSizeThreshold && response.data.length > opts.highlightSizeThreshold) {
         return response_body_el;
       } else {
@@ -2550,7 +2587,7 @@ function program3(depth0,data) {
       var template;
       template = this.template();
       $(this.el).html(template(this.model));
-      $('label[for=parameterContentType]', $(this.el)).text('Parameter content type:');
+      $('label[for=parameterContentType]', $(this.el)).text('Parameter Content Type:');
       return this;
     };
 
