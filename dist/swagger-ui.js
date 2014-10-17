@@ -1966,8 +1966,23 @@ function program3(depth0,data) {
       return parent.showCompleteStatus(response);
     };
 
+    OperationView.prototype.hideHeaders = function(headers) {
+      var headerKey, headerValue, headersToHide, headersToShow, _ref6;
+      headersToShow = {};
+      if (headers) {
+        headersToHide = ((_ref6 = this.options.swaggerOptions) != null ? _ref6.headersToHide : void 0) || [];
+        for (headerKey in headers) {
+          headerValue = headers[headerKey];
+          if (headersToHide.indexOf(headerKey) === -1) {
+            headersToShow[headerKey] = headerValue;
+          }
+        }
+      }
+      return headersToShow;
+    };
+
     OperationView.prototype.handleFileUpload = function(map, form) {
-      var bodyParam, el, headerParams, o, obj, param, params, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref6, _ref7, _ref8, _ref9,
+      var bodyParam, el, headerParams, o, obj, param, params, safeHeaders, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref6, _ref7, _ref8, _ref9,
         _this = this;
       _ref6 = form.serializeArray();
       for (_i = 0, _len = _ref6.length; _i < _len; _i++) {
@@ -2006,7 +2021,8 @@ function program3(depth0,data) {
       }
       this.invocationUrl = this.model.supportHeaderParams() ? (headerParams = this.model.getHeaderParams(map), this.model.urlify(map, false)) : this.model.urlify(map, true);
       $(".request_url", $(this.el)).html("<pre>" + this.invocationUrl + "</pre>");
-      this.showContent('json', headerParams, ".request_headers", $(this.el));
+      safeHeaders = this.hideHeaders(headerParams);
+      this.showContent('json', safeHeaders, ".request_headers", $(this.el));
       $(".request_body", $(this.el)).html(bodyParam || 'No Content');
       obj = {
         type: this.model.method,
@@ -2018,21 +2034,21 @@ function program3(depth0,data) {
         processData: false,
         error: function(data, textStatus, error) {
           data.request = {
-            headers: headerParams,
+            headers: safeHeaders,
             body: bodyParam
           };
           return _this.showErrorStatus(_this.wrap(data), _this);
         },
         success: function(data) {
           data.request = {
-            headers: headerParams,
+            headers: safeHeaders,
             body: bodyParam
           };
           return _this.showResponse(data, _this);
         },
         complete: function(data) {
           data.request = {
-            headers: headerParams,
+            headers: safeHeaders,
             body: bodyParam
           };
           return _this.showCompleteStatus(_this.wrap(data), _this);
@@ -2232,10 +2248,10 @@ function program3(depth0,data) {
       }
       $(".request_url", $(this.el)).html("<pre>" + url + "</pre>");
       this.showContent(requestContentType, response.request && response.request.body, ".request_body", $(this.el));
-      this.showContent('json', response.request && response.request.headers, ".request_headers", $(this.el));
+      this.showContent('json', response.request && this.hideHeaders(response.request.headers), ".request_headers", $(this.el));
       $(".response_code", $(this.el)).html("<pre>" + response.status + "</pre>");
       this.showContent(contentType, content, ".response_body", $(this.el));
-      this.showContent('json', response.headers, ".response_headers", $(this.el));
+      this.showContent('json', this.hideHeaders(response.headers), ".response_headers", $(this.el));
       $(".response", $(this.el)).slideDown();
       $(".response_hider", $(this.el)).show();
       $(".response_throbber", $(this.el)).hide();
@@ -2243,10 +2259,10 @@ function program3(depth0,data) {
       request_body_el = $('.request_body', $(this.el))[0];
       response_headers = $('.response_headers', $(this.el))[0];
       response_body_el = $('.response_body', $(this.el))[0];
-      opts = this.options.swaggerOptions;
       hljs.highlightBlock(request_headers_el);
       hljs.highlightBlock(request_body_el);
       hljs.highlightBlock(response_headers);
+      opts = this.options.swaggerOptions;
       if (opts.highlightSizeThreshold && response.data.length > opts.highlightSizeThreshold) {
         return response_body_el;
       } else {
