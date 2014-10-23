@@ -579,7 +579,7 @@
     var strongClose = '</span>';
     var classOpen = strong + this.name + ' {' + strongClose;
     var classClose = strong + '}' + strongClose;
-    var returnVal = classOpen + '<div>' + propertiesStr.join(',</div><div>') + '</div>' + classClose;
+    var returnVal = classOpen + '<div>' + propertiesStr.join('</div><div>') + '</div>' + classClose;
     if (!modelsToIgnore)
       modelsToIgnore = [];
     modelsToIgnore.push(this.name);
@@ -613,7 +613,7 @@
   var SwaggerModelProperty = function (name, obj) {
     this.name = name;
     this.dataType = obj.type || obj.dataType || obj["$ref"];
-    this.isCollection = this.dataType && (this.dataType.toLowerCase() === 'array' || this.dataType.toLowerCase() === 'list' || this.dataType.toLowerCase() === 'set');
+    this.isCollection = this.dataType && typeof this.dataType == 'string' && (this.dataType.toLowerCase() === 'array' || this.dataType.toLowerCase() === 'list' || this.dataType.toLowerCase() === 'set');
     this.descr = obj.description;
     this.required = obj.required;
     this.defaultValue = modelPropertyMacro(obj.defaultValue);
