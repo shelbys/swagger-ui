@@ -747,7 +747,7 @@
       }
       param.type = type;
 
-      if (type.toLowerCase() === 'boolean') {
+      if (type && type.toLowerCase() === 'boolean') {
         param.allowableValues = {};
         param.allowableValues.values = ["true", "false"];
       }
@@ -986,8 +986,11 @@
           url = url.replace(reg, this.encodePathParam(args[param.name]));
           delete args[param.name];
         }
-        else
-          throw "" + param.name + " is a required path param.";
+        else {
+          var reg = new RegExp('\{' + param.name + '[^\}]*\}', 'gi');
+          url = url.replace(reg, "");
+          delete args[param.name];
+        }
       }
     }
 
@@ -1671,6 +1674,8 @@
   var sampleModels = {};
   var cookies = {};
 
+  e.parameterMacro = parameterMacro;
+  e.modelPropertyMacro = modelPropertyMacro;
   e.SampleModels = sampleModels;
   e.SwaggerHttp = SwaggerHttp;
   e.SwaggerRequest = SwaggerRequest;
