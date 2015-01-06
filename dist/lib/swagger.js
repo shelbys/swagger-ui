@@ -980,14 +980,15 @@
     for (var i = 0; i < params.length; i++) {
       var param = params[i];
       if (param.paramType === 'path') {
-        if (args[param.name]) {
+        if (typeof args[param.name] !== 'undefined') {
           // apply path params and remove from args
-          var reg = new RegExp('\\{\\s*?' + param.name + '.*?\\}(?=\\s*?(\\/|$))', 'gi');
+          var reg = new RegExp('\\{\\s*?' + param.name + '.*?\\}(?=\\s*?(\\/?|$))', 'gi');
           url = url.replace(reg, this.encodePathParam(args[param.name]));
           delete args[param.name];
-        }
-        else {
-          var reg = new RegExp('\{' + param.name + '[^\}]*\}', 'gi');
+        } else if (param.required) {
+          throw '' + param.name + ' is a required path param.';
+        } else {
+          var reg = new RegExp('/\{' + param.name + '[^\}]*\}', 'gi');
           url = url.replace(reg, "");
           delete args[param.name];
         }
