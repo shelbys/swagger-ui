@@ -470,12 +470,6 @@ function program16(depth0,data) {
 function program18(depth0,data) {
   
   
-  return "\n          <h4>Response Class</h4>\n          <p><span class=\"model-signature\" /></p>\n          <br/>\n        ";
-  }
-
-function program20(depth0,data) {
-  
-  
   return "\n        <div style='margin:0;padding:0;display:inline'></div>\n        <h4>Response Messages</h4>\n        <table class='fullwidth'>\n          <thead>\n          <tr>\n            <th style=\"width: 60px; max-width: 60px\">Status</th>\n            <th style=\"width: 390px; max-width: 390px\">Reason</th>\n            <th style=\"width: 488px; max-width: 488px\">Model</th>\n          </tr>\n          </thead>\n          <tbody class=\"operation-status\">\n\n          </tbody>\n        </table>\n        ";
   }
 
@@ -566,10 +560,7 @@ function program20(depth0,data) {
   stack2 = helpers['if'].call(depth0, depth0.isReadOnly, {hash:{},inverse:self.program(16, program16, data),fn:self.program(14, program14, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\n        <div class='response' style='display:none'>\n          <table class='fullwidth'>\n            <tr>\n              <td class='response-header' colspan='2'><h4>Response</h4></td>\n            </tr>\n            <tr>\n              <td>Status</td>\n              <td><div class='block response_code'></div></td>\n            </tr>\n            <tr>\n              <td>Body</td>\n              <td><div class='block response_body'></div></td>\n            </tr>\n            <tr>\n              <td>Headers</td>\n              <td><div class='block response_headers'></div></td>\n            </tr>\n            <tr>\n              <td class='response-header' colspan='2'><h4>Request</h4></td>\n            </tr>\n            <tr>\n              <td>URL</td>\n              <td><div class='block request_url'></div></td>\n            </tr>\n            <tr>\n              <td>Headers</td>\n              <td><div class='block request_headers'></div></td>\n            </tr>\n            <tr>\n              <td>Body</td>\n              <td><div class='block request_body'></div></td>\n            </tr>\n          </table>\n        </div>\n        ";
-  stack2 = helpers['if'].call(depth0, depth0.type, {hash:{},inverse:self.noop,fn:self.program(18, program18, data),data:data});
-  if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\n        ";
-  stack2 = helpers['if'].call(depth0, depth0.responseMessages, {hash:{},inverse:self.noop,fn:self.program(20, program20, data),data:data});
+  stack2 = helpers['if'].call(depth0, depth0.responseMessages, {hash:{},inverse:self.noop,fn:self.program(18, program18, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\n      </div>\n    </li>\n  </ul>\n";
   return buffer;
