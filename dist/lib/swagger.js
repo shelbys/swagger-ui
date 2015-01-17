@@ -855,8 +855,10 @@
         val = '"' + val + '"';
       }
       if (listType) {
-        return '[' + val + ']';
-      } else if (typeof val === "object") {
+        val = [val];
+      }
+
+      if (typeof val === "object") {
         var t = val;
         if (val instanceof Array && val.length > 0) {
           t = val[0];
