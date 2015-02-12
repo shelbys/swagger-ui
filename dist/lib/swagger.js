@@ -1444,6 +1444,7 @@
     };
 
     jQuery.support.cors = true;
+    obj.xhrFields = { withCredentials: true };
     return jQuery.ajax(obj);
   }
 
