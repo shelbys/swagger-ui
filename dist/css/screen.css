@@ -227,8 +227,8 @@ pre code {
 }
 .swagger-section .swagger-ui-wrap .info_title h1 {
   font-weight: 300;
-  font-size: 48px;
-  padding: 14px 0px 0px 0px;
+  font-size: 36px;
+  padding: 48px 0px 0px 0px;
 }
 .swagger-section .swagger-ui-wrap p.big,
 .swagger-section .swagger-ui-wrap div.big p {
@@ -377,7 +377,7 @@ pre code {
   font-size: 1.5em;
   line-height: 1.3em;
   padding: 10px 0 10px 0;
-  font-family: 'Helvetica Neue', 'Segoe UI', Segoe, Helvetica, Arial, 'Lucida Grande', sans-serif;
+  font-family: 'Walsheim-Black', 'Arial Black', sans-serif;
   font-weight: bold;
 }
 .swagger-section .swagger-ui-wrap .heading_with_menu {
