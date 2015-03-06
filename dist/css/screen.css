@@ -252,6 +252,7 @@ pre code {
 }
 .swagger-section .swagger-ui-wrap .info_description {
   font-size: 15px;
+  padding-top: 24px;
 }
 .swagger-section .swagger-ui-wrap .markdown ol li,
 .swagger-section .swagger-ui-wrap .markdown ul li {
