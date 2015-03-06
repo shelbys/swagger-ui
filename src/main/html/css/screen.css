@@ -216,6 +216,13 @@ pre code {
   font-size: 1.1em;
   margin: 0;
   padding: 15px 0 5px;
+  text-transform: none;
+}
+.swagger-section .swagger-ui-wrap .content > .sandbox > .fullwidth > .operation-params > tr > td > .parameter-content-type > div > label {
+  text-transform: none;
+}
+.swagger-section .swagger-ui-wrap .content > .response-content-type > div > label {
+  text-transform: none;
 }
 .swagger-section .swagger-ui-wrap .content pre {
   font-size: 12px;
@@ -578,6 +585,7 @@ pre code {
   float: left;
   font-family: 'Helvetica Neue', 'Segoe UI', Segoe, Helvetica, Arial, 'Lucida Grande', sans-serif;
   font-weight: 300;
+  text-transform: none;
 }
 .swagger-section .swagger-ui-wrap ul#resources li.resource div.heading h2 a {
   color: #999999;
