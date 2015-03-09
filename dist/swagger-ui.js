@@ -1,5 +1,5 @@
 // swagger-ui.js
-// version 2.0.23
+// version 2.1.0
 $(function() {
 
 	// Helper function for vertically aligning DOM elements
@@ -363,7 +363,7 @@ function program10(depth0,data) {
 function program12(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += ", <span style=\"font-variant: small-caps\">api version</span>: ";
+  buffer += "\n        , <span style=\"font-variant: small-caps\">api version</span>: ";
   if (stack1 = helpers.apiVersion) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.apiVersion; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
