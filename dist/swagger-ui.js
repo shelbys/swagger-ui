@@ -1,5 +1,5 @@
 // swagger-ui.js
-// version 2.1.0
+// version 2.1.2
 $(function() {
 
 	// Helper function for vertically aligning DOM elements
