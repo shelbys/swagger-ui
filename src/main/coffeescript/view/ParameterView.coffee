@@ -38,7 +38,7 @@ class ParameterView extends Backbone.View
       sampleJSON = if typeof @model.param.sampleJSON == 'function' then @model.param.sampleJSON(@model.param) else @model.param.sampleJSON
       signature = if typeof @model.param.signature == 'function' then @model.param.signature(@model.param) else @model.param.signature
     signatureModel =
-      parentId: @model.container.resourceName.replace(/\//g, '_'),
+      parentId: @model.container.resourceName.replace(/[\/.]/g, '_'),
       nickname: @model.container.nickname,
       modelAnchor: modelAnchor,
       sampleJSON: sampleJSON

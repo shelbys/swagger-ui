@@ -1,5 +1,5 @@
 // swagger-ui.js
-// version 2.1.2
+// version 2.1.3
 $(function() {
 
 	// Helper function for vertically aligning DOM elements
@@ -1723,7 +1723,7 @@ function program3(depth0,data) {
           id = id + "_" + counter;
           counter += 1;
         }
-        resource.id = id.replace(/\//g, '_');
+        resource.id = id.replace(/[\/.]/g, '_');
         resources[id] = resource;
         this.addResource(resource);
       }
@@ -1783,7 +1783,7 @@ function program3(depth0,data) {
         }
         methods[id] = operation;
         operation.nickname = id;
-        operation.parentId = this.model.id.replace(/\//g, '_');
+        operation.parentId = this.model.id.replace(/[\/.]/g, '_');
         operation.swaggerRoot = $("script[src]").last().attr("src").split('?')[0].split('/').slice(0, -1).join('/') + '/..';
         this.addOperation(operation);
       }
@@ -1903,7 +1903,7 @@ function program3(depth0,data) {
       $(this.el).html(Handlebars.templates.operation(this.model));
       if (this.model.responseClassSignature && this.model.responseClassSignature !== 'string') {
         signatureModel = {
-          parentId: this.model.resourceName.replace(/\//g, '_'),
+          parentId: this.model.resourceName.replace(/[\/.]/g, '_'),
           nickname: this.model.nickname,
           modelAnchor: this.model.responseClassSignature,
           sampleJSON: this.model.responseSampleJSON,
@@ -2423,7 +2423,7 @@ function program3(depth0,data) {
         modelLabel = mockSignature;
       }
       responseModel = {
-        parentId: this.model.container.resourceName.replace(/\//g, '_'),
+        parentId: this.model.container.resourceName.replace(/[\/.]/g, '_'),
         nickname: this.model.container.nickname,
         modelAnchor: modelAnchor,
         modelLabel: modelLabel,
@@ -2507,7 +2507,7 @@ function program3(depth0,data) {
         signature = typeof this.model.param.signature === 'function' ? this.model.param.signature(this.model.param) : this.model.param.signature;
       }
       signatureModel = {
-        parentId: this.model.container.resourceName.replace(/\//g, '_'),
+        parentId: this.model.container.resourceName.replace(/[\/.]/g, '_'),
         nickname: this.model.container.nickname,
         modelAnchor: modelAnchor,
         sampleJSON: sampleJSON,
