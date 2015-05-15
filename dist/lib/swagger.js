@@ -71,17 +71,17 @@
 
   Object.keys = Object.keys || (function () {
     var hasOwnProperty = Object.prototype.hasOwnProperty,
-      hasDontEnumBug = !{ toString: null }.propertyIsEnumerable("toString"),
-      DontEnums = [
-        'toString',
-        'toLocaleString',
-        'valueOf',
-        'hasOwnProperty',
-        'isPrototypeOf',
-        'propertyIsEnumerable',
-        'constructor'
-      ],
-      DontEnumsLength = DontEnums.length;
+        hasDontEnumBug = !{ toString: null }.propertyIsEnumerable("toString"),
+        DontEnums = [
+          'toString',
+          'toLocaleString',
+          'valueOf',
+          'hasOwnProperty',
+          'isPrototypeOf',
+          'propertyIsEnumerable',
+          'constructor'
+        ],
+        DontEnumsLength = DontEnums.length;
 
     return function (o) {
       if (typeof o != "object" && typeof o != "function" || o === null)
@@ -644,9 +644,9 @@
         this.valuesString = "'" + this.values.join("', '") + "'";
       }
     }
-    if (obj["enum"] != null) {
+    if (obj["enum"] != null || obj["items"] && obj["items"]["enum"]) {
       this.valueType = "string";
-      this.values = obj["enum"];
+      this.values = obj["enum"] || obj["items"]["enum"];
       if (this.values != null) {
         this.valueString = "'" + this.values.join("', '") + "'";
       }
@@ -1047,16 +1047,16 @@
       var param = params[i];
       if(param.paramType === 'query') {
         if (queryParams !== '')
-          queryParams += '&';
+          queryParams += '&';    
         if (Array.isArray(param)) {
-          var j;
-          var output = '';
-          for(j = 0; j < param.length; j++) {
-            if(j > 0)
-              output += ',';
-            output += encodeURIComponent(param[j]);
-          }
-          queryParams += encodeURIComponent(param.name) + '=' + output;
+          var j;   
+          var output = '';   
+          for(j = 0; j < param.length; j++) {    
+            if(j > 0)    
+              output += ',';   
+            output += encodeURIComponent(param[j]);    
+          }    
+          queryParams += encodeURIComponent(param.name) + '=' + output;    
         }
         else {
           if (typeof args[param.name] !== 'undefined') {
@@ -1122,7 +1122,7 @@
     var results = [];
     var i;
 
-    var headers = SwaggerRequest.prototype.setHeaders(args, this);
+    var headers = SwaggerRequest.prototype.setHeaders(args, this);    
     for(i = 0; i < this.parameters.length; i++) {
       var param = this.parameters[i];
       if(param.paramType && param.paramType === 'header' && args[param.name]) {
@@ -1476,7 +1476,7 @@
     obj.data = obj.body;
     obj.complete = function (response, textStatus, opts) {
       var headers = {},
-        headerArray = response.getAllResponseHeaders().split("\n");
+          headerArray = response.getAllResponseHeaders().split("\n");
 
       for (var i = 0; i < headerArray.length; i++) {
         var toSplit = headerArray[i].trim();
@@ -1489,7 +1489,7 @@
           continue;
         }
         var name = toSplit.substring(0, separator).trim(),
-          value = toSplit.substring(separator + 1).trim();
+            value = toSplit.substring(separator + 1).trim();
         headers[name] = value;
       }
 
