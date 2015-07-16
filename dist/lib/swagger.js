@@ -1,5 +1,5 @@
 // swagger.js
-// version 2.0.51
+// version 2.0.53
 
 (function () {
 
@@ -794,11 +794,15 @@
       param.signature = function (param) { return _this.getSignature(param.type || param.dataType, _this.resource.models) };
       param.sampleJSON = function (param) { return _this.getSampleJSON(param.type || param.dataType, _this.resource.models) };
 
-      var enumValue = param["enum"];
+      var enumValue = param["enum"] || (param["items"] && param["items"]["enum"]);
       if (enumValue != null) {
         param.isList = true;
         param.allowableValues = {};
         param.allowableValues.descriptiveValues = [];
+
+        if (param["items"] && param["items"]["enum"]) {
+          enumValue.push(enumValue.join(','));
+        }
 
         for (var j = 0; j < enumValue.length; j++) {
           var v = enumValue[j];
