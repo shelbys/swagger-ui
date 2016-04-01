@@ -26,9 +26,10 @@ class ParameterView extends Backbone.View
     if @model.param.pattern
       modelLabel += ", <span class=\"propPattern\">/#{@model.param.pattern}/</span>"
     if @model.param.minimum || @model.param.maximum
-      modelLabel += ", <span class=\"propValueRange\">(#{@model.param.minimum || 0}...#{this.maximum || '*'})</span>"
+      modelLabel += ", <span class=\"propValueRange\">(#{@model.param.minimum || 0}...#{@model.param.maximum || '*'})</span>"
     if @model.param.minLength || @model.param.maxLength
-      modelLabel += ", <span class=\"propLengthRange\">{'+(@model.param.minLength || this.required ? 1 : 0)+'...'+(this.maxLength || '*')+'}</span>"
+      minDefault = if @model.param.required then 1 else 0
+      modelLabel += ", <span class=\"propLengthRange\">{#{@model.param.minLength || minDefault}...#{@model.param.maxLength || '*'}}</span>"
     if @model.param.minItems || @model.param.maxItems
       modelLabel += ", <span class=\"propItemsRange\">[#{@model.param.minItems || Number(@model.param.required)}...#{@model.param.maxItems || '*'}]</span>"
     if type in PRIMITIVES

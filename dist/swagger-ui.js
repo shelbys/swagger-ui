@@ -1,5 +1,5 @@
 // swagger-ui.js
-// version 2.1.4
+// version 2.1.5
 $(function() {
 
 	// Helper function for vertically aligning DOM elements
@@ -2468,7 +2468,7 @@ function program3(depth0,data) {
     };
 
     ParameterView.prototype.render = function() {
-      var contentTypeModel, isParam, modelAnchor, modelLabel, parameterContentTypeView, responseContentTypeView, sampleJSON, signature, signatureModel, signatureView, template, type;
+      var contentTypeModel, isParam, minDefault, modelAnchor, modelLabel, parameterContentTypeView, responseContentTypeView, sampleJSON, signature, signatureModel, signatureView, template, type;
       type = this.model.param.type || this.model.param.dataType;
       if (this.model.param.paramType === 'body') {
         this.model.param.isBody = true;
@@ -2491,10 +2491,11 @@ function program3(depth0,data) {
         modelLabel += ", <span class=\"propPattern\">/" + this.model.param.pattern + "/</span>";
       }
       if (this.model.param.minimum || this.model.param.maximum) {
-        modelLabel += ", <span class=\"propValueRange\">(" + (this.model.param.minimum || 0) + "..." + (this.maximum || '*') + ")</span>";
+        modelLabel += ", <span class=\"propValueRange\">(" + (this.model.param.minimum || 0) + "..." + (this.model.param.maximum || '*') + ")</span>";
       }
       if (this.model.param.minLength || this.model.param.maxLength) {
-        modelLabel += ", <span class=\"propLengthRange\">{'+(@model.param.minLength || this.required ? 1 : 0)+'...'+(this.maxLength || '*')+'}</span>";
+        minDefault = this.model.param.required ? 1 : 0;
+        modelLabel += ", <span class=\"propLengthRange\">{" + (this.model.param.minLength || minDefault) + "..." + (this.model.param.maxLength || '*') + "}</span>";
       }
       if (this.model.param.minItems || this.model.param.maxItems) {
         modelLabel += ", <span class=\"propItemsRange\">[" + (this.model.param.minItems || Number(this.model.param.required)) + "..." + (this.model.param.maxItems || '*') + "]</span>";
